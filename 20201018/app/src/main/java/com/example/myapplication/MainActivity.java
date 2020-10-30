@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,10 +24,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.Util.LoginForgetActivity;
+import com.example.myapplication.database.UserDBHelper;
+import com.example.myapplication.Util.DateUtil;
 import com.example.myapplication.Util.ViewUtil;
+import com.example.myapplication.bean.UserInfo;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private Switch ck_remember; // 声明一个滑块
 
     private RadioGroup rg_login; // 声明一个单选组对象
     private RadioButton rb_password; // 声明一个单选按钮对象
@@ -35,20 +42,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText et_password; // 声明一个编辑框对象
     private Button btn_forget; // 声明一个忘记密码按钮控件对象
     private Button btn_login; // 声明一个登录按钮控件对象
-    private Switch ck_remember; // 声明一个复选框对象
 
+
+    private EditText ct_phonenumber;
+    private EditText ct_password;
     private int mRequestCode = 0; // 跳转页面时的请求代码
-    private int mType = 0; // 用户类型
+    private int mType = 2; // 用户类型
     private boolean bRemember = false; // 是否记住密码
-    private String mPassword = "111111"; // 默认密码
+    private String mPassword = "18990222"; // 默认密码
     private String mVerifyCode; // 验证码
 
+    private UserDBHelper mHelper; // 声明一个用户数据库的帮助器对象
     private SharedPreferences mShared; // 声明一个共享参数对象
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ck_remember = findViewById(R.id.ck_remember);
+
 
         rg_login = findViewById(R.id.rg_login);
         rb_password = findViewById(R.id.rb_password);
@@ -58,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_password = findViewById(R.id.et_password);
         btn_forget = findViewById(R.id.btn_forget);
         btn_login = findViewById(R.id.btn_login);
-        ck_remember = findViewById(R.id.ck_remember);
+
 
         // 给rg_login设置单选监听器
         rg_login.setOnCheckedChangeListener(new RadioListener());
@@ -72,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initTypeSpinner();
 
-        // 给ck_remember设置勾选监听器
-        ck_remember.setOnCheckedChangeListener(new CheckListener());
 
         //从share_login.xml中获取共享参数对象
         mShared = getSharedPreferences("share_login", MODE_PRIVATE);
@@ -87,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // 初始化用户类型的下拉框
-    private String[] typeArray = {"18990245李梦阳","个人用户", "公司用户"};
+    private String[] typeArray = {"个人用户", "公司用户","18990245李梦阳"};
 
     private void initTypeSpinner() {
         // 声明一个下拉列表的数组适配器
@@ -201,11 +212,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
             if (rb_password.isChecked()) { // 密码方式校验
-                //输入的密码跟mPassword比较
-                if (!et_password.getText().toString().equals(mPassword)) {
+
+                SharedPreferences shared1 = getSharedPreferences("share", MODE_PRIVATE);
+                Map<String, Object> mapParam1 = (Map<String, Object>) shared1.getAll();
+
+                for (Map.Entry<String, Object> item_map : mapParam1.entrySet()) {
+                    String key = item_map.getKey(); // 获取该配对的键信息
+                    et_phone.setText( shared1.getString("phone", ""));
+                    et_password.setText( shared1.getString("pwd", ""));
+                }
+
+                SharedPreferences shared = getSharedPreferences("share", MODE_PRIVATE);
+                Map<String, Object> mapParam = (Map<String, Object>) shared.getAll();
+
+                String input_password=et_password.getText().toString();
+                String input_phone=et_phone.getText().toString();
+
+                String remembered_password="";
+                String remembered_phone="";
+
+                for (Map.Entry<String, Object> item_map : mapParam.entrySet()) {
+                    String key = item_map.getKey(); // 获取该配对的键信息
+                    Object value = item_map.getValue(); // 获取该配对的值信息
+                    if (key.equals("phone")) { // 如果配对值的类型为字符串
+                        remembered_phone = shared.getString(key, "");
+//                        desc = String.format("%s\n　%s的取值为%s", desc, key,
+//                                shared.getString(key, ""));
+                    }
+                    if (key.equals("pwd")) {
+                        remembered_password = shared.getString(key, "");
+                    }
+                }
+
+                if (!et_password.getText().toString().equals(remembered_password) || !et_phone.getText().toString().equals(remembered_phone)) {
                     Toast.makeText(this, "请输入正确的密码", Toast.LENGTH_SHORT).show();
                 } else { // 密码校验通过
                     loginSuccess(); // 提示用户登录成功
+
+                    //如果选择了记住密码
+                    if(ck_remember.isChecked()){
+
+                        ct_phonenumber = findViewById(R.id.et_phone);
+                        ct_password = findViewById(R.id.et_password);
+
+                        String phone_num = ct_phonenumber.getText().toString();
+                        String pwd = ct_password.getText().toString();
+
+                        SharedPreferences.Editor editor = mShared.edit(); // 获得编辑器的对象
+
+                        editor.putString("phone", phone_num); // 添加一个名叫age的整型参数
+                        editor.putString("pwd",pwd); // 添加一个名叫height的长整型参数
+                        editor.putString("update_time", DateUtil.getNowDateTime("yyyy-MM-dd HH:mm:ss"));
+                        editor.commit(); // 提交编辑器中的修改
+                    }
                 }
             } else if (rb_verifycode.isChecked()) { // 验证码方式校验
                 if (!et_password.getText().toString().equals(mVerifyCode)) {
@@ -214,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     loginSuccess(); // 提示用户登录成功
                 }
             }
+
         }
     }
 
@@ -232,16 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onRestart() {
         et_password.setText("");
         super.onRestart();
-    }
-
-    // 定义是否记住密码的勾选监听器
-    private class CheckListener implements CompoundButton.OnCheckedChangeListener {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.ck_remember) {
-                bRemember = isChecked;
-            }
-        }
     }
 
     // 校验通过，登录成功

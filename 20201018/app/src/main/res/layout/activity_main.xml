@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <RadioGroup
         android:id="@+id/rg_login"
         android:layout_width="match_parent"
@@ -41,6 +42,7 @@
             android:textSize="17sp" />
     </RadioGroup>
 
+
     <TextView
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
@@ -48,7 +50,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="我        是："
+        android:text="        我是："
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@+id/sp_type"
         app:layout_constraintEnd_toStartOf="@+id/sp_type"
@@ -116,8 +118,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="请输入密码"
-        android:inputType="number"
-        android:maxLength="6"
+        android:inputType="numberPassword"
+        android:maxLength="8"
         app:layout_constraintBottom_toBottomOf="@+id/tv_password"
         app:layout_constraintEnd_toStartOf="@+id/btn_forget"
         app:layout_constraintStart_toEndOf="@+id/tv_password"
