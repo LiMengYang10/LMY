@@ -1,6 +1,6 @@
-package com.example.myapplication.bean;
+package com.example.myapplication245.bean;
 
-import com.example.myapplication.R;
+import com.example.myapplication245.R;
 
 import java.util.ArrayList;
 

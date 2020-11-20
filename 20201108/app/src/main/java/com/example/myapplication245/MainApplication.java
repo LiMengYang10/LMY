@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication245;
 
 import android.app.Application;
 import android.graphics.Bitmap;

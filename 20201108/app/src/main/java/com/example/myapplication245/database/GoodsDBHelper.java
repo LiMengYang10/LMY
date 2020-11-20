@@ -1,4 +1,4 @@
-package com.example.myapplication.database;
+package com.example.myapplication245.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.bean.GoodsInfo;
+import com.example.myapplication245.bean.GoodsInfo;
 
 import java.util.ArrayList;
 

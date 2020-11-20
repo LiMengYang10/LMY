@@ -1,40 +1,34 @@
-package com.example.myapplication;
+package com.example.myapplication245;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.Util.SharedUtil;
-import com.example.myapplication.Util.Utils;
-import com.example.myapplication.adapter.CartAdapter;
-import com.example.myapplication.bean.CartInfo;
-import com.example.myapplication.bean.GoodsInfo;
-import com.example.myapplication.database.CartDBHelper;
-import com.example.myapplication.database.GoodsDBHelper;
+import com.example.myapplication245.Util.SharedUtil;
+import com.example.myapplication245.adapter.CartAdapter;
+import com.example.myapplication245.bean.CartInfo;
+import com.example.myapplication245.bean.GoodsInfo;
+import com.example.myapplication245.database.CartDBHelper;
+import com.example.myapplication245.database.GoodsDBHelper;
+
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener  {
 

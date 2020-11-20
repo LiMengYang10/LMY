@@ -1,4 +1,4 @@
-package com.example.myapplication.adapter;
+package com.example.myapplication245.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.MainApplication;
-import com.example.myapplication.R;
-import com.example.myapplication.ShoppingDetailActivity;
-import com.example.myapplication.bean.GoodsInfo;
+
+import com.example.myapplication245.bean.GoodsInfo;
+import com.example.myapplication245.MainApplication;
+import com.example.myapplication245.R;
+import com.example.myapplication245.ShoppingDetailActivity;
 
 import java.util.ArrayList;
 

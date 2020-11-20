@@ -1,4 +1,4 @@
-package com.example.myapplication.adapter;
+package com.example.myapplication245.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,9 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.myapplication.MainApplication;
-import com.example.myapplication.R;
-import com.example.myapplication.bean.CartInfo;
+import com.example.myapplication245.MainApplication;
+import com.example.myapplication245.R;
+import com.example.myapplication245.bean.CartInfo;
+
+
 
 import java.util.ArrayList;
 

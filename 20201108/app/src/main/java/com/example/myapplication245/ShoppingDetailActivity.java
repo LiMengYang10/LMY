@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication245;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,12 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.Util.DateUtil;
-import com.example.myapplication.Util.SharedUtil;
-import com.example.myapplication.bean.CartInfo;
-import com.example.myapplication.bean.GoodsInfo;
-import com.example.myapplication.database.CartDBHelper;
-import com.example.myapplication.database.GoodsDBHelper;
+import com.example.myapplication245.Util.DateUtil;
+import com.example.myapplication245.Util.SharedUtil;
+import com.example.myapplication245.bean.CartInfo;
+import com.example.myapplication245.bean.GoodsInfo;
+import com.example.myapplication245.database.CartDBHelper;
+import com.example.myapplication245.database.GoodsDBHelper;
 
 public class ShoppingDetailActivity extends AppCompatActivity implements View.OnClickListener{
 

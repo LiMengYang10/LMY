@@ -1,4 +1,4 @@
-package com.example.myapplication.bean;
+package com.example.myapplication245.bean;
 
 public class CartInfo {
     public long rowid;

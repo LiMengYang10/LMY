@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication245;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,14 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.Util.DateUtil;
-import com.example.myapplication.Util.FileUtil;
-import com.example.myapplication.Util.SharedUtil;
-import com.example.myapplication.Util.Utils;
-import com.example.myapplication.bean.CartInfo;
-import com.example.myapplication.bean.GoodsInfo;
-import com.example.myapplication.database.CartDBHelper;
-import com.example.myapplication.database.GoodsDBHelper;
+import com.example.myapplication245.Util.DateUtil;
+import com.example.myapplication245.Util.FileUtil;
+import com.example.myapplication245.Util.SharedUtil;
+import com.example.myapplication245.Util.Utils;
+import com.example.myapplication245.bean.CartInfo;
+import com.example.myapplication245.bean.GoodsInfo;
+import com.example.myapplication245.database.CartDBHelper;
+import com.example.myapplication245.database.GoodsDBHelper;
 
 import java.util.ArrayList;
 
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 获取当前App的私有存储路径
         String path = MainApplication.getInstance().getExternalFilesDir(
                 Environment.DIRECTORY_DOWNLOADS).toString() + "/";
-        if (mFirst.equals("false")) { // 如果是首次打开
+        if (mFirst.equals("true")) { // 如果是首次打开
             ArrayList<GoodsInfo> goodsList = GoodsInfo.getDefaultList();
             for (int i = 0; i < goodsList.size(); i++) {
                 GoodsInfo info = goodsList.get(i);
@@ -240,6 +240,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 info.pic_path = pic_path;
                 // 更新商品数据库中该商品记录的图片路径
                 mGoodsHelper.update(info);
+            }
+        }else { // 不是首次打开
+            // 查询商品数据库中所有商品记录
+            ArrayList<GoodsInfo> goodsArray = mGoodsHelper.query("1=1");
+            for (int i = 0; i < goodsArray.size(); i++) {
+                GoodsInfo info = goodsArray.get(i);
+                // 从指定路径读取图片文件的位图数据
+                Bitmap thumb = BitmapFactory.decodeFile(info.thumb_path);
+                // 把该位图对象保存到应用实例的全局变量中
+                MainApplication.getInstance().mIconMap.put(info.rowid, thumb);
             }
         }
         // 把是否首次打开写入共享参数
